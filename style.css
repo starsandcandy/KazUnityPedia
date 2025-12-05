@@ -1,0 +1,196 @@
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --accent:#1f6feb;
+  --muted:#6b7280;
+  --radius:12px;
+  --shadow: 0 6px 18px rgba(17,24,39,0.08);
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Сброс */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#111827;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Боковой чат (фиксированный) */
+.chat-bar{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:320px;
+  max-width:90vw;
+  background:var(--card);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transform:translateY(12px);
+  transition:transform .18s ease,opacity .18s ease;
+  opacity:1;
+  z-index:60;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+}
+.chat-bar:not(.open){
+  transform:translateY(12px) scale(.98);
+  opacity:.97;
+}
+.chat-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  border-bottom:1px solid #eef2f6;
+  background:linear-gradient(90deg, rgba(31,111,235,0.06), rgba(31,111,235,0.02));
+}
+.chat-header h3{margin:0;font-size:14px}
+.chat-body{padding:12px 14px}
+.icon-btn{
+  background:transparent;border:0;padding:6px;border-radius:8px;cursor:pointer;font-size:14px;
+}
+.muted{color:var(--muted);font-size:13px;margin-bottom:8px}
+.chat-actions{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.primary{background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+.ghost{background:transparent;border:1px solid #e6eefc;padding:8px 10px;border-radius:10px;color:var(--accent);text-decoration:none}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;padding:8px;border-radius:10px;border:1px solid #e6eefc}
+.chat-toggle{
+  position:fixed; right:18px; bottom:18px; width:56px; height:56px;
+  border-radius:50%; border:0; background:var(--accent); color:#fff;
+  box-shadow:0 10px 28px rgba(31,111,235,0.22); cursor:pointer; z-index:70; font-size:20px;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f6feb; /* голубой */
+  padding: 0 20px;
+  height: 60px; /* "потолще" */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Левая часть */
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.site-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Центр */
+.center-section select {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+}
+
+/* Правая часть */
+.right-section .profile-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%; /* делаем кружком */
+  cursor: pointer;
+}
+
+/* Плашка (hero) */
+.hero{display:flex;justify-content:space-between;align-items:center;padding:20px;border-radius:14px;margin-top:12px;background:
+  linear-gradient(180deg, rgba(15,23,42,0.02), rgba(15,23,42,0.01));box-shadow:var(--shadow)}
+.uni-title{margin:0;font-size:24px}
+.uni-sub{margin:6px 0 14px;color:var(--muted)}
+.hero-actions .btn{margin-right:8px;text-decoration:none}
+.btn{display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none}
+.btn.outline{background:transparent;border:1px solid #e6eefc;color:var(--accent)}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin-top:12px;padding:8px 0;border-bottom:1px solid #eef2f6}
+.tab{background:transparent;border:0;padding:10px 14px;border-radius:10px;cursor:pointer}
+.tab.active{background:#fff;box-shadow:var(--shadow)}
+
+/* Контент */
+.container{max-width:1100px;margin:20px auto;padding:0 18px}
+.tab-content{display:none;background:transparent;padding:10px 0}
+.tab-content.active{display:block}
+
+/* Фильтры */
+.filters{display:flex;flex-wrap:wrap;gap:12px;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:12px;box-shadow:var(--shadow)}
+.filter-item{min-width:160px;flex:1;max-width:320px;display:flex;flex-direction:column}
+.filter-item label{font-size:13px;color:var(--muted);margin-bottom:6px}
+.filter-item input, .filter-item select{padding:8px;border-radius:8px;border:1px solid #edf2fb}
+.filter-actions{display:flex;gap:8px;align-items:end}
+
+/* Grid карточек */
+.cards-grid{display:flex;flex-direction:column;gap:14px;margin-top:16px}
+
+/* Карточка */
+.card{
+  display:flex;
+  gap:14px;
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  align-items:stretch;
+}
+.card-left{width:170px;flex-shrink:0}
+.img-placeholder{
+  width:170px;height:110px;border-radius:8px;background:linear-gradient(135deg,#eef6ff,#f3f7fb);display:flex;
+  align-items:center;justify-content:center;color:var(--muted);font-size:13px
+}
+.card-middle{flex:1}
+.card-right{width:160px;flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end}
+.card-title{margin:0 0 6px;font-size:18px}
+.card-meta{color:var(--muted);font-size:13px;margin-bottom:6px}
+.card-ege{font-size:13px;color:var(--muted);margin-bottom:8px}
+.card-desc{margin:6px 0 12px;color:#374151}
+.card-tags{display:flex;gap:8px}
+.tag{background:#fff3f6;border-radius:14px;padding:6px 10px;font-size:13px;color:#c026d3;border:1px solid #ffe6fb}
+
+/* Прайс/места справа */
+.price{text-align:right}
+.price-title{font-size:13px;color:var(--muted)}
+.price-value{font-weight:700;margin-bottom:8px}
+.places{font-size:13px;color:var(--muted);text-align:right}
+
+/* Footer */
+.site-footer{text-align:center;padding:22px 12px;color:var(--muted)}
+
+/* Адаптив */
+@media (max-width:900px){
+  .card{flex-direction:column}
+  .card-left,.card-right{width:100%}
+  .card-right{align-items:flex-start}
+  .hero{flex-direction:column;align-items:flex-start;gap:12px}
+  .chat-bar{right:12px;left:auto}
+}
+.profile-icon {
+    margin-left: auto;
+}
+
+.profile-icon img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+}

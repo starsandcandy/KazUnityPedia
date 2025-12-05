@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KazUnityPedia — Главная</title>
+<style>
+/* Бар-чат */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f6feb;
+  padding: 0 20px;
+  height: 60px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+  color: white;
+}
+.left-section { display: flex; align-items: center; gap: 10px; }
+.site-logo { width: 40px; height: 40px; }
+.site-title { font-size: 20px; font-weight: bold; }
+.center-section select { margin: 0 10px; padding: 5px 10px; border-radius: 6px; border: none; font-size: 14px; }
+.right-section .profile-icon { width: 35px; height: 35px; border-radius: 50%; cursor: pointer; }
+
+/* Главный контейнер */
+main { padding: 20px; font-family: Arial, sans-serif; }
+
+/* Поле поиска */
+.search-bar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.search-bar input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Сетка карточек */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Карточка ВУЗа */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.card:hover { transform: scale(1.05); }
+.card img { width: 100%; height: 120px; object-fit: cover; }
+.card .card-title { padding: 10px; font-weight: bold; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<!-- Бар-чат -->
+<div class="top-bar">
+  <div class="left-section">
+    <img src="logo.png" alt="Логотип" class="site-logo">
+    <span class="site-title">Вузопедия KZ</span>
+  </div>
+  <div class="center-section">
+    <select>
+      <option>Выберите город</option>
+      <option>Алматы</option>
+      <option>Астана</option>
+      <option>Шымкент</option>
+    </select>
+    <select>
+      <option>Выберите ВУЗ</option>
+      <option>КБТУ</option>
+      <option>UIB</option>
+      <option>AITU</option>
+      <option>IITU</option>
+    </select>
+  </div>
+  <div class="right-section">
+    <img src="https://www.alice.ru/bitrix/templates/eshop_adapt_alice/components/bitrix/sale.basket.basket.line/modern/images/profile.svg" alt="Личный кабинет" class="profile-icon">
+  </div>
+</div>
+
+<main>
+  <!-- Поисковая строка -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Поиск ВУЗа...">
+  </div>
+
+  <!-- Сетка карточек -->
+  <div class="cards-grid" id="cardsGrid">
+    <a href="KBTY.html" class="card">
+      <img src="https://avatars.mds.yandex.net/i?id=6d3168f05c2fa8850f495de3d88daea00861bcc5-16238604-images-thumbs&n=13" alt="КБТУ">
+      <div class="card-title">КБТУ</div>
+    </a>
+
+    <a href="UIB.html" class="card">
+      <img src="https://avatars.mds.yandex.net/get-altay/904281/2a000001871de922bcdc62fe9a39894983f1/XXL_height" alt="UIB">
+      <div class="card-title">UIB</div>
+    </a>
+
+    <a href="AITU.html" class="card">
+      <img src="https://avatars.mds.yandex.net/get-altay/11732311/2a0000018e1032697ed360d3b27b6942abf5/XXL_height" alt="AITU">
+      <div class="card-title">AITY</div>
+    </a>
+
+    <a href="IITU.html" class="card">
+      <img src="https://avatars.mds.yandex.net/get-altay/13671691/2a00000191c4b320c13628e4343538b50764/L_height" alt="IITU">
+      <div class="card-title">IITU</div>
+    </a>
+    
+  </div>
+</main>
+
+<script>
+// Поиск по карточкам
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('#cardsGrid .card');
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  cards.forEach(card => {
+    const title = card.querySelector('.card-title').textContent.toLowerCase();
+    card.style.display = title.includes(query) ? '' : 'none';
+  });
+});
+</script>
+
+</body>
+</html>

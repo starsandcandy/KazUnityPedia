@@ -155,9 +155,22 @@ body{
 }
 .card-left{width:170px;flex-shrink:0}
 .img-placeholder{
-  width:170px;height:110px;border-radius:8px;background:linear-gradient(135deg,#eef6ff,#f3f7fb);display:flex;
-  align-items:center;justify-content:center;color:var(--muted);font-size:13px
+  width: 120px;         /* задаём ширину блока */
+  height: 150px;        /* задаём высоту блока */
+  overflow: hidden;     /* чтобы ничего не вылезало */
+  border-radius: 12px;  /* если нужно округление */
+  display: flex;
+  justify-content: center;
+  align-items: center;  /* временный фон */
 }
+
+.img-placeholder img {
+  max-width: 100%;      /* картинка не больше блока */
+  max-height: 100%;     /* картинка не вылезает по высоте */
+  object-fit: cover;    /* аккуратно масштабирует картинку */
+  display: block;       /* убираем лишние отступы под img */
+}
+
 .card-middle{flex:1}
 .card-right{width:160px;flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end}
 .card-title{margin:0 0 6px;font-size:18px}

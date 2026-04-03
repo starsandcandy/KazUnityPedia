@@ -17,8 +17,8 @@
 <div class="top-bar">
   <!-- Левая часть: логотип + название -->
   <div class="left-section">
-    <img src="logo.png" alt="Логотип" class="site-logo">
-    <span class="site-title">Вузопедия KZ</span>
+    <img src="Logo.jpg" alt="Логотип" class="site-logo">
+    <span class="site-title">KazUnityPedia</span>
   </div>
 
   <!-- Центральная часть: выбор города и ВУЗа -->
@@ -116,109 +116,126 @@
       <h2>Специальности ФГОС</h2>
 
       <!-- Фильтры -->
-      <div class="filters">
-        <div class="filter-item">
-          <label for="scoreMax">Проходной балл (до)</label>
-          <input id="scoreMax" type="number" min="0" placeholder="например 200" />
-        </div>
+<div class="filters">
+  <div class="filter-item">
+    <label for="scoreMax">Проходной балл (до)</label>
+    <input id="scoreMax" type="number" min="0" placeholder="например 200" />
+  </div>
 
-        <div class="filter-item">
-          <label for="costMax">Стоимость (до), KZT</label>
-          <input id="costMax" type="number" min="0" placeholder="например 350000" />
-        </div>
+  <div class="filter-item">
+    <label for="costMax">Стоимость (до), KZT</label>
+    <input id="costMax" type="number" min="0" placeholder="например 350000" />
+  </div>
 
-        <div class="filter-item">
-          <label for="egeSubject">Предмет ЕНТ</label>
-          <select id="egeSubject">
-            <option value="">Любой</option>
-            <option value="math">Математика</option>
-            <option value="rus">Русский</option>
-            <option value="bio">Биология</option>
-            <option value="info">Информатика</option>
-            <option value="fiz">Физика</option>
-            <option value="geo">География</option>
-            <option value="xim">Химия</option>
-          </select>
-        </div>
+  <div class="filter-item">
+    <label for="egeSubject">Предмет ЕНТ</label>
+    <select id="egeSubject">
+      <option value="">Любой</option>
+      <option value="math">Математика</option>
+      <option value="rus">Русский</option>
+      <option value="bio">Биология</option>
+      <option value="info">Информатика</option>
+      <option value="fiz">Физика</option>
+      <option value="geo">География</option>
+      <option value="xim">Химия</option>
+    </select>
+  </div>
 
-        <div class="filter-actions">
-          <button id="applyFilters" class="primary">Применить</button>
-          <button id="clearFilters" class="ghost">Сброс</button>
-        </div>
-      </div>
-      <script>
-        const subjectMap = {
-        math: ['математика'],
-        rus: ['русский'],
-        bio: ['биология'],
-        info: ['информатика'],
-        fiz: ['физика'],
-        geo: ['география'],
-        xim: ['химия']
-        };
+  <div class="filter-actions">
+    <button id="applyFilters" class="primary">Применить</button>
+    <button id="clearFilters" class="ghost">Сброс</button>
+  </div>
+</div>
 
-        function applyFilters() {
-            const scoreMax = Number(document.getElementById('scoreMax').value) || Infinity;
-            const costMax = Number(document.getElementById('costMax').value) || Infinity;
-            const subj = document.getElementById('egeSubject').value;
 
-            document.querySelectorAll('#cardsGrid .card').forEach(card => {
-                const score = Number(card.dataset.score) || Infinity;
-                const cost = Number(card.dataset.cost) || Infinity;
+<script>
+const subjectMap = {
+    math: ['математика'],
+    rus: ['русский'],
+    bio: ['биология'],
+    info: ['информатика'],
+    fiz: ['физика'],
+    geo: ['география'],
+    xim: ['химия']
+};
 
-                // Получаем текст из div.card-ege, убираем "ЕНТ:" и пробелы
-                const subjectsText = card.querySelector('.card-ege')?.textContent.replace('ЕНТ:', '').trim() || '';
-                const subjects = subjectsText.split(',').map(s => s.trim().toLowerCase());
+function applyFilters() {
+    const scoreMin = Number(document.getElementById('scoreMin').value) || 0; // от введённого
+    const costMin = Number(document.getElementById('costMax').value) || 0;   // от введённого
+    const subj = document.getElementById('egeSubject').value;
 
-                let visible = true;
-                if (score > scoreMax) visible = false;
-                if (cost > costMax) visible = false;
-                if (subj) {
-                    const searchTerms = subjectMap[subj] || [];
-                    // Проверяем, есть ли хотя бы один вариант из map в карточке
-                    if (!searchTerms.some(term => subjects.includes(term))) visible = false;
-                }
+    // Перебираем все карточки
+    document.querySelectorAll('#cardsGrid .card').forEach(card => {
+        const score = Number(data-score) || 0;
+        const cost = Number(card.data-cost) || 0;
 
-                card.style.display = visible ? '' : 'none';
-            });
+        // Получаем предметы ЕНТ из карточки
+        const subjectsText = card.querySelector(data-subjects); 
+        const subjects = subjectsText.split(',').map(s => s.trim().toLowerCase());
+
+        let visible = true;
+
+        // Баллы: от введённого до 120
+        if (score < scoreMin || score > 120) visible = false;
+
+        // Стоимость: от введённого до бесконечности
+        if (cost < costMin) visible = false;
+
+        // Фильтр по предмету ЕНТ
+        if (subj) {
+            const searchTerms = subjectMap[subj] || [];
+            if (!searchTerms.some(term => subjects.includes(term))) visible = false;
         }
 
-        // Кнопки фильтров
-        document.getElementById('applyFilters').addEventListener('click', applyFilters);
-        document.getElementById('clearFilters').addEventListener('click', () => {
-            document.getElementById('scoreMax').value = '';
-            document.getElementById('costMax').value = '';
-            document.getElementById('egeSubject').value = '';
-            applyFilters();
-        });
+        // Показываем или скрываем карточку
+        card.style.display = visible ? 'flex' : 'none';
+    });
+}
 
-        // Фильтр по Enter
-        ['scoreMax', 'costMax'].forEach(id => {
-            document.getElementById(id).addEventListener('keydown', e => {
-                if (e.key === 'Enter') applyFilters();
-            });
-        });
+// Кнопка применения фильтров
+document.getElementById('applyFilters').addEventListener('click', applyFilters);
 
-        // Инициализация на старте
-        applyFilters();
-    </script>
+// Кнопка сброса фильтров
+document.getElementById('clearFilters').addEventListener('click', () => {
+    document.getElementById('scoreMax').value = '';
+    document.getElementById('costMax').value = '';
+    document.getElementById('egeSubject').value = '';
+    
+    // Показываем все карточки
+    document.querySelectorAll('#cardsGrid .card').forEach(card => card.style.display = 'flex');
+});
+
+// Применять фильтры при нажатии Enter
+['scoreMax', 'costMax'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') applyFilters();
+    });
+});
+
+// Инициализация: показываем все карточки при загрузке
+document.querySelectorAll('#cardsGrid .card').forEach(card => card.style.display = 'flex');
+</script>
+
+
+
 
 
 
 
       <!-- Список карточек специальностей -->
       <div id="cardsGrid" class="cards-grid">
-        <!-- Карточка (пример) -->
-        <article class="card" data-score="218" data-cost="167000" data-subjects="math,rus,phys">
+         <article class="card" data-score="90" data-cost="1900000" data-subjects="math , info ">
           <div class="card-left">
-            <div class="img-placeholder" aria-hidden="true">Изображение</div>
+            <div class="img-placeholder" aria-hidden="true">
+                <img src="https://avatars.mds.yandex.net/i?id=8b5703797a514a327f3f50294d13d5c7_l-9211905-images-thumbs&n=13" alt="Информационные технологии" />
+            </div>
           </div>
 
           <div class="card-middle">
-            <h3 class="card-title">Автоматизация технологических процессов и производств</h3>
-            <div class="card-meta">15.03.04 • Бакалавриат • Очная</div>
-            <div class="card-ege"><strong>ЕНТ:</strong> математика , русский, физика / химия / информатика</div>
-            <p class="card-desc">Программа готовит высококвалифицированных инженеров для автоматизации производств.</p>
+            <h3 class="card-title">Программная инженерия / компьютерные науки / информационные системы</h3>
+            <div class="card-meta"> Бакалавриат • Очная</div>
+            <div class="card-ege"><strong>ЕНТ:</strong> математика, информатика</div>
+            <p class="card-desc">Разработка ПО и компьютерных систем</p>
 
             <div class="card-tags">
               <span class="tag">1 программа</span>
@@ -229,27 +246,29 @@
           <div class="card-right">
             <div class="price">
               <div class="price-title">Стоимость</div>
-              <div class="price-value">от 167 000 ₸</div>
+              <div class="price-value">от 1 900 000 ₸</div>
             </div>
 
             <div class="places">
-              <div>Бюджет <strong>от 218</strong> <small>40 мест</small></div>
-              <div>Платно <strong>от 169</strong> <small>20 мест</small></div>
+              <div>Бюджет <strong>от 90</strong> <small>150 мест</small></div>
+              <div>Платно <strong>от 50</strong> <small>250 мест</small></div>
             </div>
           </div>
         </article>
 
         <!-- Вторая карточка -->
-        <article class="card" data-score="260" data-cost="350000" data-subjects="bio,rus,math">
+        <article class="card" data-score="88" data-cost="2000000" data-subjects="math , fiz ">
           <div class="card-left">
-            <div class="img-placeholder" aria-hidden="true">Изображение</div>
+            <div class="img-placeholder" aria-hidden="true">
+                <img src="https://cdn.mos.cms.futurecdn.net/Pnu3SZtaStSuwyfEYh8zu-2000-80.jpg" alt="Информационные технологии" />
+            </div>
           </div>
 
           <div class="card-middle">
-            <h3 class="card-title">Биоинженерия и биоинформатика</h3>
-            <div class="card-meta">06.05.01 • Специалитет • Очная</div>
-            <div class="card-ege"><strong>ЕНТ:</strong> русский, обществознание, математика / иностранный</div>
-            <p class="card-desc">Специальность объединяет биологию и ИТ-технологии для обработки биоданных.</p>
+            <h3 class="card-title">Компьютерная безопасность / кибербезопасность / защита информации</h3>
+            <div class="card-meta"> Бакалавриат • Очная</div>
+            <div class="card-ege"><strong>ЕНТ:</strong> математика, физика </div>
+            <p class="card-desc">Безопасность данных и информационных систем</p>
 
             <div class="card-tags">
               <span class="tag">2 программы</span>
@@ -260,17 +279,48 @@
           <div class="card-right">
             <div class="price">
               <div class="price-title">Стоимость</div>
-              <div class="price-value">от 350 000 ₸</div>
+              <div class="price-value">от 2 000 000 ₸</div>
             </div>
 
             <div class="places">
-              <div>Бюджет <strong>от 260</strong> <small>20 мест</small></div>
-              <div>Платно <strong>от 220</strong> <small>15 мест</small></div>
+              <div>Бюджет <strong>от 88</strong> <small>80 мест</small></div>
+              <div>Платно <strong>от 50</strong> <small>140 мест</small></div>
             </div>
           </div>
         </article>
 
-        <!-- Добавь ещё карточки по аналогии (можно динамически генерировать) -->
+        <article class="card" data-score="110" data-cost="2050000" data-subjects="math , info ">
+          <div class="card-left">
+            <div class="img-placeholder" aria-hidden="true">
+                <img src="https://i.pinimg.com/originals/93/9f/9c/939f9c40c05bc6cbea107e88a5012b2a.jpg" alt="Информационные технологии" />
+            </div>
+          </div>
+
+          <div class="card-middle">
+            <h3 class="card-title">Data-направления: Data Science, аналитика, IT-бизнес, медиакоммуникации и цифровой бизнес</h3>
+            <div class="card-meta"> Бакалавриат • Очная</div>
+            <div class="card-ege"><strong>ЕНТ:</strong> математика, информатика</div>
+            <p class="card-desc">Анализ данных и статистическая обработка</p>
+
+            <div class="card-tags">
+              <span class="tag">1 программа</span>
+              <span class="tag">50 преподавателей</span>
+            </div>
+          </div>
+
+          <div class="card-right">
+            <div class="price">
+              <div class="price-title">Стоимость</div>
+              <div class="price-value">от 2 050 000 ₸</div>
+            </div>
+
+            <div class="places">
+              <div>Бюджет <strong>от 110</strong> <small>40 мест</small></div>
+              <div>Платно <strong>от 90</strong> <small>20 мест</small></div>
+            </div>
+          </div>
+        </article>
+
       </div>
     </section>
         <!-- Местоположение -->
@@ -294,7 +344,7 @@
 
   <!-- Небольшой footer -->
   <footer class="site-footer">
-    <div>© 2025 ВУЗопедия КЗ — демо</div>
+    <div>© 2025 KazUnityPedia — демо</div>
   </footer>
 
   <!-- Скрипт: переключение вкладок, чат, фильтрация карточек -->
